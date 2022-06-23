@@ -4,7 +4,7 @@ const Positioner = styled.div`
   min-height: 100vh;
   max-width: 450px;
   margin: 0 auto -236px;
-  margin-top: 7%;
+  margin-top: 5%;
 `;
 const Box = styled.div`
   padding: 5% 5% 5%;
