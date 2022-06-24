@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
@@ -31,24 +32,24 @@ const ButtonWrapper = styled.div`
   width: 100%;
 `;
 
-type User_Req = {
-  id: string;
-  pw: string;
-};
 const LoginForm = () => {
+  const router = useRouter();
   const [id, setID] = useState("");
   const [pw, setPW] = useState("");
   const signIn = () => {
     axios
-      .post("http://localhost:8081/login", {
+      .post("http://146.56.129.188:8081/login", {
         id: id,
         pw: pw,
       })
       .then((res) => {
         console.log(res);
+        alert("Login Success");
+        router.push("/main");
       })
       .catch((e) => {
         console.log(e);
+        alert("Login Fail");
       });
   };
   return (
@@ -62,6 +63,11 @@ const LoginForm = () => {
           onChange={(e) => {
             setID(e.target.value);
           }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              signIn();
+            }
+          }}
         />
       </RowWrapper>
       <RowWrapper>
@@ -72,6 +78,11 @@ const LoginForm = () => {
           variant="outlined"
           onChange={(e) => {
             setPW(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              signIn();
+            }
           }}
         />
       </RowWrapper>
