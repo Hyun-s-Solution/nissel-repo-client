@@ -1,3 +1,5 @@
+import { useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -28,18 +30,53 @@ const ButtonWrapper = styled.div`
   margin-top: 8%;
   width: 100%;
 `;
+
+type User_Req = {
+  id: string;
+  pw: string;
+};
 const LoginForm = () => {
+  const [id, setID] = useState("");
+  const [pw, setPW] = useState("");
+  const signIn = () => {
+    axios
+      .post("http://localhost:8081/login", {
+        id: id,
+        pw: pw,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <div>
       <Title>로그인</Title>
       <RowWrapper>
-        <CustomTextField id="outlined-basic" label="ID" variant="outlined" />
+        <CustomTextField
+          id="outlined-basic"
+          label="ID"
+          variant="outlined"
+          onChange={(e) => {
+            setID(e.target.value);
+          }}
+        />
       </RowWrapper>
       <RowWrapper>
-        <CustomTextField id="outlined-basic" label="PW" variant="outlined" />
+        <CustomTextField
+          id="outlined-basic"
+          label="PW"
+          type="password"
+          variant="outlined"
+          onChange={(e) => {
+            setPW(e.target.value);
+          }}
+        />
       </RowWrapper>
       <ButtonWrapper>
-        <CustomButton variant="contained" disableElevation>
+        <CustomButton variant="contained" disableElevation onClick={signIn}>
           로그인
         </CustomButton>
       </ButtonWrapper>
